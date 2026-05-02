@@ -1,142 +1,74 @@
-import { FileText, Layers, Quote, Users } from "lucide-react";
 import Link from "next/link";
 import { MarketingFooter } from "@/components/marketing-footer";
 import { MarketingNav } from "@/components/marketing-nav";
+import { THEMES } from "@/lib/mock-data";
 
-export default function LandingPage() {
+export default function Landing() {
+  const theme = THEMES[0];
+  const prev = Math.round(theme.prevalence * 100);
+  const quote = theme.quotes[0];
+
   return (
     <div className="min-h-screen bg-paper text-ink flex flex-col">
       <MarketingNav />
 
-      <section className="relative overflow-hidden px-6 pt-16 pb-24 md:px-10 md:pt-24 md:pb-32">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex items-center gap-2 mb-6">
-            <span
-              aria-hidden
-              className="h-[7px] w-[7px] rounded-sm bg-[color:var(--accent)]"
-            />
-            <span className="mono-small">Alpha · portfolio project</span>
-          </div>
+      <section className="flex-1">
+        <div className="mx-auto max-w-[1100px] px-6 md:px-10 pt-24 pb-20 md:pt-32">
+          <div className="grid grid-cols-1 gap-14 md:grid-cols-[1.25fr_1fr] md:items-center md:gap-16">
+            <div>
+              <div className="label">Customer-research synthesis</div>
+              <h1 className="display mt-5 text-[64px] leading-[0.96] tracking-[-0.018em] md:text-[96px]">
+                Transcripts in.{" "}
+                <span className="display-italic" style={{ color: "var(--accent)" }}>
+                  Themes out.
+                </span>
+              </h1>
+              <p className="mt-6 max-w-[44ch] text-[16px] leading-[1.65] text-ink-2">
+                Drop a folder of transcripts. Chorus clusters the themes and shows the quote behind every claim.
+              </p>
+              <div className="mt-8">
+                <Link
+                  href="/app"
+                  className="inline-flex items-center gap-2 bg-ink text-paper px-5 py-3 text-[14px] rounded-[3px] hover:bg-ink-2 transition-colors"
+                >
+                  Open a study
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
+            </div>
 
-          <h1 className="quote text-[46px] leading-[1.03] tracking-[-0.022em] text-ink max-w-[840px] md:text-[68px]">
-            30 interviews.{" "}
-            <span className="quote-italic text-[color:var(--accent)]">
-              Five themes.
-            </span>{" "}
-            Ten minutes.
-          </h1>
-
-          <p className="mt-6 max-w-[620px] text-[15px] leading-[1.75] text-ink-2 md:text-[17px]">
-            Chorus reads your interview transcripts and extracts the themes
-            worth shipping — with verbatim quotes from every participant that
-            said it. For product teams, founding teams, and UX researchers who
-            do this weekly and don't have a week to spare.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <Link
-              href="/app"
-              className="group flex items-center gap-1.5 rounded-md bg-ink text-paper px-5 py-2.5 text-[14px] font-medium hover:bg-[color:var(--ink-2)] transition-colors"
-            >
-              <span>Open the studio</span>
-              <span
-                aria-hidden
-                className="transition-transform group-hover:translate-x-0.5"
+            <div className="border border-line bg-card rounded-[4px] p-5">
+              <div className="flex items-baseline justify-between">
+                <span className="mono text-[10px] text-ink-3 tracking-[0.12em]">
+                  THEME · {prev}% OF PARTICIPANTS
+                </span>
+                <span
+                  aria-hidden
+                  className="h-[8px] w-[8px] rounded-full"
+                  style={{ background: "var(--accent)" }}
+                />
+              </div>
+              <div className="display mt-2 text-[18px] leading-tight text-ink">
+                {theme.name}.
+              </div>
+              <p className="mt-2 text-[12.5px] leading-[1.6] text-ink-2">
+                {theme.summary}
+              </p>
+              <blockquote
+                className="mt-3 border-l-2 pl-3 py-1 text-[12px] leading-[1.55] italic text-ink"
+                style={{ borderColor: "var(--accent)" }}
               >
-                →
-              </span>
-            </Link>
-            <Link
-              href="/brief/?c=demo"
-              className="flex items-center gap-1.5 rounded-md border border-line bg-card px-5 py-2.5 text-[14px] font-medium text-ink-2 hover:border-line-2 hover:text-ink transition-colors"
-            >
-              <span>See a sample brief</span>
-            </Link>
+                &ldquo;{quote.text.slice(0, 140)}{quote.text.length > 140 ? "…" : ""}&rdquo;
+              </blockquote>
+            </div>
           </div>
-
-          <figure className="mt-20 rounded-2xl border border-line bg-card px-8 py-10 md:px-14 md:py-14 relative">
-            <Quote
-              aria-hidden
-              className="absolute -top-3 left-10 h-6 w-6 text-[color:var(--accent)] bg-paper p-1 rounded"
-              strokeWidth={2}
-            />
-            <blockquote className="quote-italic text-[24px] md:text-[28px] leading-[1.35] tracking-[-0.01em] text-ink max-w-[720px]">
-              "I thought the sample data was my data and was looking for how
-              to delete it. Lost 20 minutes on that alone. Label your
-              fixtures."
-            </blockquote>
-            <figcaption className="mt-5 text-[12.5px] text-ink-3 font-mono">
-              Chen Wei · Product Manager · Canvas ·{" "}
-              <span className="text-[color:var(--accent)]">
-                quoted in "Sample data indistinguishable from real data"
-              </span>
-            </figcaption>
-          </figure>
         </div>
 
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            backgroundImage:
-              "radial-gradient(color-mix(in oklab, var(--accent) 5%, transparent) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-            maskImage:
-              "radial-gradient(ellipse 70% 45% at 50% 20%, black 30%, transparent 75%)",
-          }}
-        />
-      </section>
-
-      <section className="border-t border-line bg-paper-2 px-6 py-20 md:px-10 md:py-28">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16 max-w-[620px]">
-            <div className="mono-small">How it works</div>
-            <h2 className="quote mt-3 text-[32px] leading-[1.12] tracking-[-0.02em] text-ink md:text-[40px]">
-              Four steps, from{" "}
-              <span className="quote-italic text-[color:var(--accent)]">
-                pile
-              </span>{" "}
-              to{" "}
-              <span className="quote-italic text-[color:var(--accent)]">
-                ship.
-              </span>
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-            <Step n="01" icon={FileText} title="Upload transcripts" body="Paste or drop 5–50 transcripts. Zoom, Gong, Otter, or plain text." />
-            <Step n="02" icon={Users} title="Segment automatically" body="Participants tagged by role, company size, and custom dimensions." />
-            <Step n="03" icon={Layers} title="Extract themes" body="Gemini 2.5 Pro reads every transcript and surfaces themes with prevalence and intensity per segment." />
-            <Step n="04" icon={Quote} title="Share the brief" body="A polished read-only URL your team, exec staff, and stakeholders can open without an account." />
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-line px-6 py-20 md:px-10 md:py-28">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="quote text-[36px] leading-[1.1] tracking-[-0.02em] text-ink md:text-[48px]">
-            Your research{" "}
-            <span className="quote-italic text-[color:var(--accent)]">
-              deserves shipping.
-            </span>
-          </h2>
-          <p className="mt-5 max-w-[520px] mx-auto text-[14.5px] leading-[1.7] text-ink-2">
-            The alpha is seeded with a real-feeling onboarding study, a
-            pricing study mid-analysis, and an enterprise-gaps study still
-            collecting transcripts.
-          </p>
-          <div className="mt-8">
-            <Link
-              href="/app"
-              className="group inline-flex items-center gap-1.5 rounded-md bg-ink text-paper px-6 py-3 text-[14px] font-medium hover:bg-[color:var(--ink-2)] transition-colors"
-            >
-              <span>Open the studio</span>
-              <span
-                aria-hidden
-                className="transition-transform group-hover:translate-x-0.5"
-              >
-                →
-              </span>
-            </Link>
+        <div className="border-y border-line">
+          <div className="mx-auto max-w-[1100px] px-6 md:px-10 py-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Step n="01" verb="Upload" detail="Transcripts, any length" />
+            <Step n="02" verb="Cluster" detail="Themes by quote, not by vibes" />
+            <Step n="03" verb="Cite" detail="Every claim → its moment" />
           </div>
         </div>
       </section>
@@ -146,31 +78,12 @@ export default function LandingPage() {
   );
 }
 
-function Step({
-  n,
-  icon: Icon,
-  title,
-  body,
-}: {
-  n: string;
-  icon: typeof FileText;
-  title: string;
-  body: string;
-}) {
+function Step({ n, verb, detail }: { n: string; verb: string; detail: string }) {
   return (
-    <div className="rounded-xl border border-line bg-card px-5 py-5 transition-colors hover:border-line-2">
-      <div className="flex items-center justify-between">
-        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-accent-soft text-[color:var(--accent)]">
-          <Icon className="h-4 w-4" strokeWidth={2} />
-        </span>
-        <span className="font-mono text-[10.5px] text-ink-3 tabular-nums">
-          {n}
-        </span>
-      </div>
-      <h3 className="display mt-5 text-[17px] leading-[1.2] text-ink">
-        {title}
-      </h3>
-      <p className="mt-2 text-[12.5px] leading-[1.7] text-ink-2">{body}</p>
+    <div>
+      <div className="mono text-[10.5px] text-ink-3 tracking-[0.16em]">{n}</div>
+      <div className="display mt-1 text-[26px] leading-none text-ink">{verb}.</div>
+      <div className="mt-1 text-[13px] text-ink-2">{detail}</div>
     </div>
   );
 }
